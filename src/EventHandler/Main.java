@@ -2,13 +2,15 @@ package EventHandler;
 
 import EventHandler.exceptions.InvalidBookSeats;
 import EventHandler.exceptions.InvalidCancelReservation;
+import EventHandler.exceptions.InvalidDateException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws
+            NumberFormatException,InvalidBookSeats,InvalidCancelReservation,InvalidDateException{
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;//flag di uscita dal ciclo
         while(!exit){
@@ -88,7 +90,7 @@ public class Main {
 
             try{
                 event = new Event(title,date,totalPlaces);
-            }catch (IllegalArgumentException e){
+            }catch (InvalidDateException e){
                 System.out.println("Unable to create event");
                 System.out.println(e.getMessage());
             }

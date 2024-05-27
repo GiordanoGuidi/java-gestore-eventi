@@ -102,4 +102,5 @@ public class Event {
     public String toString() {
         return eventDetails(this);
     }
+
 }
