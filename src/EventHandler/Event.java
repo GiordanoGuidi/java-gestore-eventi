@@ -6,6 +6,8 @@ import EventHandler.exceptions.InvalidDateException;
 import EventHandler.exceptions.InvalidTotalPlaces;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Event {
     //Attributi
@@ -15,7 +17,7 @@ public class Event {
     private int reservedSeats;
 
     //Costruttori
-    public Event(String title,LocalDate date,int totalPlaces,int reservedSeats)
+    public Event(String title,LocalDate date,int totalPlaces)
     throws InvalidDateException,InvalidTotalPlaces{
         this.title= title;
         this.date= validateDate(date);
@@ -34,7 +36,7 @@ public class Event {
         this.title = title;
     }
 
-    public LocalDate getDate() {
+    public LocalDate getDate(){
         return date;
     }
 
@@ -86,8 +88,16 @@ public class Event {
         return reservedSeats -= Seats;
     }
 
+    //Metodo per restituire il resoconto della prenotazione
+    public static String eventDetails(Event event){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "yyyy-MM-dd", Locale.ENGLISH);
+        return String.format("%s - %s", event.getDate().format(formatter),
+                event.getTitle());
+    }
+
+
     @Override
     public String toString() {
-        return super.toString();
+        return eventDetails(this);
     }
 }
