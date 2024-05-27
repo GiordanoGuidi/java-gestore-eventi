@@ -17,17 +17,15 @@ public class Event {
     private int reservedSeats;
 
     //Costruttori
-    public Event(String title,LocalDate date,int totalPlaces)
+    public Event(String title,String date,int totalPlaces)
     throws InvalidDateException,InvalidTotalPlaces{
         this.title= title;
-        this.date= validateDate(date);
+        this.date= validateDate(LocalDate.parse(date));
         this.totalPlaces= validateTotalPlaces(totalPlaces);
         this.reservedSeats= 0;
     }
 
     //Getter e Setter
-
-
     public String getTitle() {
         return title;
     }
@@ -47,7 +45,6 @@ public class Event {
     public int getTotalPlaces() {
         return totalPlaces;
     }
-
 
     public int getReservedSeats(){
         return reservedSeats;

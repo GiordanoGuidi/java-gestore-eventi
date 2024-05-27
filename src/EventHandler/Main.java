@@ -70,6 +70,7 @@ public class Main {
                     break;
             }
         }
+        //Chiudo lo scanner
         scanner.close();
     }
 
@@ -83,11 +84,10 @@ public class Main {
             String title = scanner.nextLine();
             //Data
             System.out.println("Event date");
-            LocalDate date = getDate(scanner);
+            String date = scanner.nextLine();
             //Posti totali
             System.out.println("Total seats");
             int totalPlaces = Integer.parseInt(scanner.nextLine());
-
             try{
                 event = new Event(title,date,totalPlaces);
             }catch (InvalidDateException e){

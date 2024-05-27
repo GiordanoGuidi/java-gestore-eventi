@@ -23,7 +23,7 @@ public class Concert extends Event {
     //Costruttore
     public Concert(String title, String date, int totalPlaces,String time,BigDecimal price) throws
             InvalidDateException, InvalidTotalPlaces, InvalidCancelReservation {
-        super(title, LocalDate.parse(date), totalPlaces);
+        super(title, date , totalPlaces);
         this.time = LocalTime.parse(time);
         this.price = price;
     }
