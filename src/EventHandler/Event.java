@@ -57,7 +57,7 @@ public class Event {
     //Metodo per validare le data
     private  LocalDate validateDate(LocalDate date) throws InvalidDateException {
         if(date == null || date.isBefore(LocalDate.now())){
-            throw new InvalidDateException("Invalid date: " + date);
+            throw new InvalidDateException(" Invalid date: " + date);
         }
         return date;
     }
@@ -65,27 +65,29 @@ public class Event {
     //Metodo per validare i posti totali
     private int validateTotalPlaces(int totalPlaces) throws InvalidTotalPlaces{
         if (totalPlaces <=0){
-            throw new InvalidTotalPlaces("Invalid total places value: " + totalPlaces);
+            throw new InvalidTotalPlaces(" Invalid total places value: " + totalPlaces);
         }
         return totalPlaces;
     }
 
     //Metodo per prenotare posti
-    public int bookSeats(int Seats) throws InvalidBookSeats{
+    public void bookSeats(int seats) throws InvalidBookSeats{
         //Se la data è passato o non ci sono posti disponibili sollevo un eccezione
-        if (date.isBefore(LocalDate.now()) || reservedSeats + Seats > totalPlaces){
+        if (date.isBefore(LocalDate.now()) || reservedSeats + seats > totalPlaces){
             int availableSeats = totalPlaces - reservedSeats;
-            throw new InvalidBookSeats("Invalid date: " + date + "or avaiable seats: " + availableSeats);
+            throw new InvalidBookSeats(" Invalid date: " + date + " or avaiable seats: " + availableSeats);
         }
-        return reservedSeats += Seats;
+        reservedSeats = reservedSeats + seats;
+        totalPlaces = totalPlaces - reservedSeats;
     }
 
     //Metodo per disdire la prenotazione
-    public int cancelReservation(int Seats){
-        if (date.isBefore(LocalDate.now()) || reservedSeats < Seats){
-            throw new InvalidCancelReservation("Invalid date: " + date + "or reserved seat < of " + Seats);
+    public void cancelReservation(int seats) throws InvalidCancelReservation{
+        if (date.isBefore(LocalDate.now()) || reservedSeats < seats){
+            throw new InvalidCancelReservation(" Invalid date: " + date + "or reserved seat < of " + seats);
         }
-        return reservedSeats -= Seats;
+        reservedSeats = reservedSeats - seats;
+        totalPlaces = totalPlaces + seats;
     }
 
     //Metodo per restituire il resoconto della prenotazione

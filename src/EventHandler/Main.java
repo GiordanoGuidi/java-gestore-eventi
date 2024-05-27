@@ -1,5 +1,8 @@
 package EventHandler;
 
+import EventHandler.exceptions.InvalidBookSeats;
+import EventHandler.exceptions.InvalidCancelReservation;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
@@ -19,8 +22,46 @@ public class Main {
                     break;
                 case "y":
                     //insert
+                    //Chiamo il metodo per creare un evento
                     Event event = createEvent(scanner);
-                    System.out.println(event);
+                    //Chiedo se vuole prenotare dei posti
+                    System.out.println("Do you want to reserve seats y/n");
+                    choice = (scanner.nextLine());
+                    //Chiedo quanti posti vuole prenotare
+                    System.out.println("How many seats you want to reserve?");
+                    int seats;
+                    if (choice.equals("y")){
+                        try{
+                            seats = Integer.parseInt(scanner.nextLine());
+                            System.out.println("posti prenotati" + seats);
+                            //Chiamo il metodo per fare la prenotazione
+                            event.bookSeats(seats);
+                            System.out.println("Totale posti" + event.getTotalPlaces());
+                        }catch (NumberFormatException e){
+                            System.out.println("Invalid seats value: " + e.getMessage());
+                            break;
+                        }catch (InvalidBookSeats e){
+                            System.out.println("Unable to book reservation" + e.getMessage());
+                            break;
+                        }
+                        //Chiedo se vuole cancellare la prenotazione
+                        System.out.println("Do you want to cancel a reservation? y/n");
+                        choice = scanner.nextLine();
+                        //Chiedo quanti posti aveva la prenotazione
+                        System.out.println("How many seats did the reservation include?");
+                        int seatsToDelete;
+                        try{
+                            seatsToDelete = Integer.parseInt(scanner.nextLine());
+                            //Chiamo il metodo che esegue la cancellazione della prenotazione
+                            event.cancelReservation(seatsToDelete);
+                            System.out.println("posti prenotati" + event.getReservedSeats());
+                            System.out.println("posti disponibili" + event.getTotalPlaces());
+                        }catch (NumberFormatException e){
+                            System.out.println("Invalid seats value: " + e.getMessage());
+                        }catch (InvalidCancelReservation e){
+                            System.out.println("Unable to cancel reservation: " + e.getMessage());
+                        }
+                    }
                     break;
                 default:
                     System.out.println("Invalid choice");
